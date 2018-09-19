@@ -28,7 +28,10 @@ module V1
           #requires :token, type: String, desc: "Access token."
         end
         get :ping do   
-            { message: headers['token']}
+          if "Bearer"!=/Bearer/.match(headers['Authorization'])[0]
+            error!('Unauthorized.', 401)
+
+          end
           { message: "pong" }
         end
 
